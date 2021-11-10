@@ -48,17 +48,12 @@ int main(void)
 
   USART2_RegisterCallback(process_serial_data);
 
-  char tx_data = 'a';
-
   while (1)
   {
 	  for(int i = 0; led_state[i] != '\0'; i++){
 		  LL_USART_TransmitData8(USART2, led_state[i]);
 	  	  LL_mDelay(10);
 	  }
-
-	  //LL_USART_TransmitData8(USART2, tx_data++);
-	  //tx_data == ('z' + 1) ? tx_data = 'a' : tx_data;
 
 	  LL_mDelay(5000);
   }
@@ -108,7 +103,6 @@ void process_serial_data(uint8_t ch)
 		count++;
 		if(count == 5){
 			LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_13);
-			//led_state[] = "LED ON ";
 			strcpy(led_state, "LED ON ");
 			led_state[7] = '\0';
 			count = 0;
@@ -119,7 +113,6 @@ void process_serial_data(uint8_t ch)
 		count++;
 		if(count == 6){
 			LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_13);
-			//led_state[] = "LED OFF ";
 			strcpy(led_state, "LED OFF ");
 			led_state[8] = '\0';
 			count = 0;
